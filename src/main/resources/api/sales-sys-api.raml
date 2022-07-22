@@ -1,0 +1,48 @@
+#%RAML 1.0
+title: sales-sys-api
+description: This api is used to create, update, delete the records from salesforce.
+mediaType: 
+- application/json
+traits:
+  clientId_secret: !include traits/clientId-secret-trait.raml
+
+/sales:
+  is:  [clientId_secret]
+  get:
+    description: Get sales details by ID.
+    queryParameters:
+      "id": number
+    responses:
+      200:
+        body:
+            example:
+              !include Examples/get-response.json
+  post:
+    description: used to create the sales in salesforce.
+    body:
+          example:
+            !include Examples/post-request.json
+          type: !include datatypes/sales-dataType.raml  
+    responses:
+      201:
+       body:
+           example: !include Examples/post-response.json
+                                                                    
+  patch:
+    queryParameters:
+      "Id": number
+    body:
+        example: !include Examples/patch-request.json
+        type: !include datatypes/sales-dataType.raml
+                   
+    responses:
+       201:
+        body:
+            example: !include Examples/patch-response.json
+  delete:
+    queryParameters:
+      "Id": number
+    responses:
+      200:
+        body:
+            example: !include Examples/delete-response.json
